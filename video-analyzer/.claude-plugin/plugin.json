@@ -1,10 +1,10 @@
 {
-  "name": "video-product-summary",
-  "version": "1.0.0",
-  "description": "分析产品介绍/演示类会议视频，提取功能模块、使用场景和 User Journey，输出带截图的 Markdown 结构化报告",
+  "name": "video-analyzer",
+  "version": "2.0.0",
+  "description": "从视频中提取用户想要的内容，支持会议纪要、教学总结、产品分析及自定义模式",
   "author": {
     "name": "BoyuanGao"
   },
   "category": "productivity",
-  "tags": ["video", "product-analysis", "meeting", "chinese"]
+  "tags": ["video", "analysis", "meeting", "training", "product", "chinese"]
 }
