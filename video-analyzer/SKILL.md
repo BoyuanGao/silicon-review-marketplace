@@ -142,9 +142,9 @@ echo "<transcript.text>" > "<输出目录>/<标题>_transcript.txt"
 
 阅读完整转录，按当前模式的转录提炼重点（见 references 文件）提取相关内容。
 
-**3b.2 — 生成纯转录报告**
+**3b.2 — 生成纯转录 HTML 报告**
 
-使用当前模式的降级模式输出模板（见 references 文件）。
+使用当前模式的降级模式输出模板（见 references 文件），生成自包含 HTML 文件。警告横幅和转录文件附录按模板自动包含。
 
 ## 共享 HTML 基础样式
 
@@ -207,36 +207,47 @@ echo "<transcript.text>" > "<输出目录>/<标题>_transcript.txt"
 | 教学总结 | `#16a34a` | `#f0fdf4` | 黄=警告 `#fef3c7` |
 | 自定义 | `#6b7280` | `#f3f4f6` | — |
 
-### Step 4: 生成报告（图像分析模式）
+### Step 4: 生成 HTML 报告（图像分析模式）
 
-使用当前模式的图像分析模式输出模板（见 references 文件）。
+使用当前模式的图像分析模式 HTML 输出模板（见 references 文件）生成自包含 HTML 文件。模板中的 `<style>` 标签包含该模式完整的内联 CSS，报告可在浏览器中离线打开。
+
+**输出要求：**
+- 报告必须是以 `<!DOCTYPE html>` 开头的完整自包含 HTML 文件
+- 所有 CSS 内联在 `<style>` 标签中，无外部引用
+- 截图引用格式：`<img src="screenshots/<文件名>" alt="<描述>" style="max-width:100%; border-radius:6px;">`
+- checkbox 行动项需包含 `onchange` 内联 JS 实现勾选切换效果
+- 讨论区/章节使用 `<details open>` 折叠面板，默认展开
 
 ### Step 4.5: 补充附录
 
-在报告末尾追加跳过的时间段附录：
+在 HTML 报告的 `<footer>` 之前追加跳过的时间段附录：
 
-```markdown
----
-
-## 附录：跳过的无关时间段
-
-以下时间段经转录文本分析后判定为与提取目标无关，对应帧未纳入图像分析：
-
-| 时间段 | 转录内容摘要 | 跳过原因 |
-|--------|-------------|---------|
-| 00:00:00 ~ 00:02:30 | "大家好，欢迎..." | 开场寒暄 |
-| ... | ... | ... |
+```html
+<h2><span class="section-bar" style="background:#e2e8f0;"></span>附录：跳过的无关时间段</h2>
+<p style="font-size:13px; color:#94a3b8; margin-bottom:12px;">以下时间段经转录文本分析后判定为与提取目标无关，对应帧未纳入图像分析：</p>
+<table>
+  <thead><tr><th>时间段</th><th>转录内容摘要</th><th>跳过原因</th></tr></thead>
+  <tbody>
+    <tr><td>00:00:00 ~ 00:02:30</td><td>"大家好，欢迎..."</td><td>开场寒暄</td></tr>
+    <!-- ... -->
+  </tbody>
+</table>
 ```
+
+将此 HTML 片段插入到 `<footer>` 之前。
 
 ### Step 5: 输出文件
 
-- 报告文件默认保存到当前项目工作目录（`$CWD`）
+- HTML 报告文件默认保存到当前项目工作目录（`$CWD`），文件名 `<标题>.html`
 - 图像分析模式：创建 `screenshots/` 子目录，复制引用的关键帧
 - 纯转录模式：无截图，跳过 screenshots/ 创建
 - 两种模式都输出转录文件
 
 ```bash
 OUT_DIR="${CWD:-.}"
+
+# 保存 HTML 报告
+# （报告内容由 AI 生成，写入 $OUT_DIR/<标题>.html）
 
 # 图像分析模式
 mkdir -p "$OUT_DIR/screenshots"
