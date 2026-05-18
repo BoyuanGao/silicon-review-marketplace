@@ -14,9 +14,21 @@ description: "从视频中提取用户想要的内容。支持会议纪要、教
 - 产品演示视频 → 提取功能模块和 User Journey
 - 任意视频 → 用户自定义提取目标
 
-## 前置依赖
+## 前置依赖与环境检测
 
-确保以下工具可用（本会话需已安装）：
+### 环境检测与自动安装
+
+首次使用或检测到缺失时，自动安装依赖：
+
+```bash
+# 检测 peepshow 是否已安装
+if ! command -v peepshow &> /dev/null; then
+  echo "peepshow 未安装，正在通过 npm 自动安装..."
+  npm i -g peepshow
+fi
+```
+
+确保以下工具可用：
 - `peepshow`（全局 CLI + Claude Code 插件）—— 帧提取 + 转录
 - MiniMax MCP `understand_image` —— 图片理解
 - `ffmpeg` / `ffprobe` —— 视频信息检查
