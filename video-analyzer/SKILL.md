@@ -81,7 +81,8 @@ export PATH="$HOME/bin:$PATH"
 
 PEEPSHOW_CLIENT=claude-code peepshow <视频路径> \
   --fps <按上表> --max <按上表> --width 1280 \
-  --transcribe whisper-cpp --no-gpu --emit json --output /tmp/peepshow_video_summary
+  $PEEPSHOW_GPU_FLAG \
+  --transcribe whisper-cpp --emit json --output /tmp/peepshow_video_summary
 ```
 
 解析 JSON 输出，获取：
