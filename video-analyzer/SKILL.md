@@ -26,13 +26,17 @@ if ! command -v peepshow &> /dev/null; then
   echo "peepshow 未安装，正在通过 npm 自动安装..."
   npm i -g peepshow
 fi
+
+# 检测 GPU 环境，输出 PEEPSHOW_GPU_FLAG / WHISPER_USE_GPU / GPU_TYPE
+eval $(bash "$(dirname "$0")/scripts/detect-gpu.sh")
+echo "GPU: $GPU_TYPE | peepshow: $PEEPSHOW_GPU_FLAG | whisper GPU: $([ "$WHISPER_USE_GPU" = 1 ] && echo on || echo off)"
 ```
 
 确保以下工具可用：
 - `peepshow`（全局 CLI + Claude Code 插件）—— 帧提取 + 转录
 - MiniMax MCP `understand_image` —— 图片理解
 - `ffmpeg` / `ffprobe` —— 视频信息检查
-- `whisper-cli`（whisper.cpp）—— 本地语音转录
+- `whisper-cli`（whisper.cpp）—— 本地语音转录（自动检测 GPU）
 
 ## 工作流程
 
