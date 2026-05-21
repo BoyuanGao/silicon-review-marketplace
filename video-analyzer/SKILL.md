@@ -28,7 +28,7 @@ if ! command -v peepshow &> /dev/null; then
 fi
 
 # 检测 GPU 环境，输出 PEEPSHOW_GPU_FLAG / WHISPER_USE_GPU / GPU_TYPE
-eval $(bash "$(dirname "$0")/scripts/detect-gpu.sh")
+eval $(bash "video-analyzer/scripts/detect-gpu.sh")
 echo "GPU: $GPU_TYPE | peepshow: $PEEPSHOW_GPU_FLAG | whisper GPU: $([ "$WHISPER_USE_GPU" = 1 ] && echo on || echo off)"
 ```
 
