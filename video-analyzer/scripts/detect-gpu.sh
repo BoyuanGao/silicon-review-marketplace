@@ -40,7 +40,9 @@ detect_gpu() {
   echo "off"
 }
 
-GPU_TYPE=$(detect_gpu)
+if [ -z "${GPU_TYPE:-}" ]; then
+  GPU_TYPE=$(detect_gpu)
+fi
 
 case "$GPU_TYPE" in
   cuda)
